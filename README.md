@@ -12,6 +12,10 @@ These are written from the syllabus topics. They are not my original lab questio
 | `sql/02_queries.sql` | Ten queries covering selection, joins, GROUP BY and HAVING, LEFT JOIN, subquery, window function, CTE, NULL handling and a view |
 | `python/run_sql.py` | Runs everything, then shows a trigger and audit table, a transaction rollback, constraint violations and the effect of an index |
 | `results/database_output.txt` | Output of every query |
+| `sql/01_schema.sql`, `sql/02_data.sql`, `sql/03_queries.sql` | A second, separate version of the same exercise with an instructor-based university schema and a longer query set, run from the `sqlite3` shell |
+| `NORMALIZATION.md` | Worked example of normalising a flat table to 3NF, leading to the schema in `sql/01_schema.sql` |
+| `results/query_output.txt` | Output of the second query set |
+| `results/university.db` | The SQLite database built by the second version |
 
 ## Run
 
