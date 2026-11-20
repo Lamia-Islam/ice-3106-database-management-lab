@@ -1,0 +1,121 @@
+--- 1. Selection and projection: ICE students in year 4
+name    year
+------  ----
+Anika   4   
+Farhan  4   
+(2 rows)
+
+--- 2. Join: student, course and grade
+name    title         grade
+------  ------------  -----
+Dipu    Databases     4.0  
+Farhan  Cryptography  3.9  
+Anika   Cryptography  3.75 
+Farhan  Networking    3.6  
+Anika   Networking    3.5  
+Dipu    Algorithms    3.5  
+(6 rows)
+
+--- 3. Aggregate with GROUP BY and HAVING: average grade per course (at least 2 students)
+title         students  avg_grade
+------------  --------  ---------
+Cryptography  3         3.55     
+Networking    2         3.55     
+Algorithms    3         3.38     
+Circuits      2         2.75     
+(4 rows)
+
+--- 4. Outer join: students with no grade yet or no enrolment
+name   course_id  grade
+-----  ---------  -----
+Hasib  CSE-2201   NULL 
+(1 rows)
+
+--- 5. Subquery: instructors earning more than the average of their department
+name        salary 
+----------  -------
+Dr. Rahman  90000.0
+Dr. Hasan   95000.0
+(2 rows)
+
+--- 6. Division (relational algebra): students enrolled in every ICE-4xxx course
+name  
+------
+Anika 
+Farhan
+(2 rows)
+
+--- 7. Set operation EXCEPT: instructors who teach no course
+inst_id  name     
+-------  ---------
+5        Dr. Islam
+(1 rows)
+
+--- 8. Window function: rank of students by grade within each course
+course_id  stu_id  grade  rank
+---------  ------  -----  ----
+CSE-2201   4       3.5    1   
+CSE-2201   3       3.25   2   
+CSE-3101   4       4.0    1   
+EEE-1101   7       3.0    1   
+EEE-1101   5       2.5    2   
+ICE-2201   2       2.75   1   
+ICE-4101   6       3.6    1   
+ICE-4101   1       3.5    2   
+ICE-4107   6       3.9    1   
+ICE-4107   1       3.75   2   
+ICE-4107   2       3.0    3   
+(11 rows)
+
+--- 9. Recursive CTE: numbers 1 to 5
+i
+-
+1
+2
+3
+4
+5
+(5 rows)
+
+--- 10. View
+student  course        grade
+-------  ------------  -----
+Anika    Cryptography  3.75 
+Anika    Networking    3.5  
+(2 rows)
+
+--- 11. Trigger: log every grade change
+note                           
+-------------------------------
+student 8 CSE-2201: NULL -> 2.9
+(1 rows)
+
+--- 12. Constraint violations are rejected
+REJECTED: FOREIGN KEY constraint failed
+  (INSERT INTO student VALUES (99, 'Bad', 77, 2);)
+
+REJECTED: CHECK constraint failed: grade BETWEEN 0 AND 4
+  (INSERT INTO enrollment VALUES (1, 'ICE-4101', 9.9);)
+
+--- 13. Transaction rollback
+rows_inside_transaction
+-----------------------
+0                      
+(1 rows)
+
+rows_after_rollback
+-------------------
+12                 
+(1 rows)
+
+--- 14. Indexing: query plan before and after creating an index
+id  parent  notused  detail      
+--  ------  -------  ------------
+2   0       0        SCAN student
+(1 rows)
+
+id  parent  notused  detail                                              
+--  ------  -------  ----------------------------------------------------
+3   0       0        SEARCH student USING INDEX idx_student_name (name=?)
+(1 rows)
+
